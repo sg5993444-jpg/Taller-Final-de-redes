@@ -8,9 +8,9 @@ Servicio web en **Node.js + Express** para consultar y registrar el **estado de 
 
 | # Lista | Apellidos y nombres |
 |---|---|
-| __ | __________ |
-| __ | __________ |
-| __ | __________ |
+| 8 | Santiago Giraldo Garcia  |
+| 20 | Juan Camilo Pacheco Vega |
+| 21 | Sebastian Pacheco Vega |
 
 - **N** (número de lista del primer integrante en orden alfabético): `__`
 - **Encabezado asignado:** `X-Red-Equipo: CIAF-__`
