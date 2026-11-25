@@ -1,0 +1,108 @@
+{
+  "info": {
+    "name": "Taller Redes - Envios (X-Red-Equipo)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000" },
+    { "key": "equipoHeader", "value": "CIAF-1" }
+  ],
+  "item": [
+    {
+      "name": "1. GET válido (200)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));",
+              "pm.test('Trae X-Servidor-Procesado', () => pm.response.to.have.header('X-Servidor-Procesado'));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "X-Red-Equipo", "value": "{{equipoHeader}}" },
+          { "key": "Origin", "value": "http://localhost:5500" }
+        ],
+        "url": { "raw": "{{baseUrl}}/api/envios", "host": ["{{baseUrl}}"], "path": ["api", "envios"] }
+      }
+    },
+    {
+      "name": "2. POST válido (201)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 201', () => pm.response.to.have.status(201));",
+              "pm.test('Trae X-Servidor-Procesado', () => pm.response.to.have.header('X-Servidor-Procesado'));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "X-Red-Equipo", "value": "{{equipoHeader}}" },
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Origin", "value": "http://localhost:5500" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"guia\": \"CO-1003\",\n  \"destino\": \"Armenia\",\n  \"estado\": \"En bodega\"\n}"
+        },
+        "url": { "raw": "{{baseUrl}}/api/envios", "host": ["{{baseUrl}}"], "path": ["api", "envios"] }
+      }
+    },
+    {
+      "name": "3. GET sin header (401)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 401', () => pm.response.to.have.status(401));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Origin", "value": "http://localhost:5500" }
+        ],
+        "url": { "raw": "{{baseUrl}}/api/envios", "host": ["{{baseUrl}}"], "path": ["api", "envios"] }
+      }
+    },
+    {
+      "name": "4. Verificar headers de respuesta (CORS + custom)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));",
+              "pm.test('CORS: Allow-Origin correcto', () => pm.expect(pm.response.headers.get('Access-Control-Allow-Origin')).to.eql('http://localhost:5500'));",
+              "pm.test('X-Servidor-Procesado = Equipo-N', () => pm.expect(pm.response.headers.get('X-Servidor-Procesado')).to.match(/^Equipo-\\d+$/));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "X-Red-Equipo", "value": "{{equipoHeader}}" },
+          { "key": "Origin", "value": "http://localhost:5500" }
+        ],
+        "url": { "raw": "{{baseUrl}}/api/envios", "host": ["{{baseUrl}}"], "path": ["api", "envios"] }
+      }
+    }
+  ]
+}
