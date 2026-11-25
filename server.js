@@ -3,8 +3,8 @@ const cors = require("cors");
 
 // ====== CONFIGURACIÓN DEL EQUIPO ======
 // N = número de lista del primer integrante (orden alfabético por apellido).
-// Cámbialo aquí o ejecuta:  TEAM_N=12 npm start
-const N = process.env.TEAM_N || "1"; // <-- CAMBIAR
+
+const N = process.env.TEAM_N || "8"; // <-- CAMBIAR
 const HEADER_NAME = "X-Red-Equipo";
 const HEADER_VALUE = `CIAF-${N}`;
 const ORIGEN_PERMITIDO = "http://localhost:5500";
